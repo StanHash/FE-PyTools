@@ -56,7 +56,7 @@ The idea is that you get the "list" of portrait data files to generate through d
 
 # Credits
 
-Most tools were either made or based off circleseverywhere's work.
+Most tools were based off circleseverywhere's work.
 
 | name               | original authors           | further additions    | notes |
 | ------------------ | -------------------------- | -------------------- | ----- |
