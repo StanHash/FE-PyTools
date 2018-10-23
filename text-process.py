@@ -71,7 +71,7 @@ def generate_text_entries(lines):
 
 def preprocess(fileName, includeDepth = 0):
 	if includeDepth > 500:
-		print("Warning: #include depth exceeds 500. Check for circular inclusion.\nCurrent file: " + filepath)
+		print("Warning: #include depth exceeds 500. Check for circular inclusion.\nCurrent file: " + fileName)
 		return None
 
 	with open(fileName, 'r') as f:
@@ -184,7 +184,7 @@ def main():
 			# Write include
 
 			f.write("{}:\n".format(textDataLabel))
-			f.write('#incbin "{}.bin"\n'.format(os.path.relpath(textFileName, os.path.dirname(outputPath))))
+			f.write('#incbin "{}.dmp"\n'.format(os.path.relpath(textFileName, os.path.dirname(outputPath))))
 			f.write("setText(${:X}, {})\n\n".format(entry.stringId, textDataLabel))
 
 			# Check if file exists with the same content

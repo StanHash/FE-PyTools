@@ -93,7 +93,7 @@ class MugEntry:
 			yield '#define {0} {1}\n\n'.format(self.indexDefinition, self.index)
 
 def gen_header():
-	yield '// File generated from by genmugs\n'
+	yield '// File generated from by portrait-process\n'
 	yield '#include "Tools/Tool Helpers.txt"\n\n'
 
 if __name__ == '__main__':
