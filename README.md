@@ -2,13 +2,57 @@ Collection of python (3) tools for make/EA. Most tools output EA events.
 
 # Usage
 
-## `c2ea` & `n2c`
+## `c2ea`
 
-*See `NMM2CSV/README.md`.*
+```
+usage: c2ea.py [-h] [-csv CSV] [-nmm NMM] [-out OUT] [-folder FOLDER]
+               [-installer INSTALLER]
+               [rom]
+
+Convert CSV file(s) to EA events using NMM file(s) as reference. Defaults to
+looking for CSVs in the current directory. You can specify a directory to look
+in using -folder, or you can switch to processing singles CSVs using -csv.
+
+positional arguments:
+  rom                   reference ROM (for pointer searching)
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -csv CSV              CSV for single csv processing
+  -nmm NMM              (use with -csv) reference NMM (default:
+                        [CSVFile]:.csv=.nmm)
+  -out OUT              (use with -csv) output event (default:
+                        [CSVFile]:.csv=.event)
+  -folder FOLDER        folder to look for csvs in
+  -installer INSTALLER  output installer event (default: [Folder]/Table
+                        Installer.event)
+```
+
+*See `NMM2CSV/README.md` for details.*
 
 ## `tmx2ea`
 
-*See `TMX2EA/README.md`*
+```
+usage: tmx2ea.py [-h] [-s] [-O INSTALLER] [-H] [tmxFiles [tmxFiles ...]]
+
+Convert TMX file(s) to EA events. When no arguments are given, will ask what
+to do. If given a list of tmx files, will process them all. If given the `-s`
+option, will scan current directory for tmx files, process them all, and
+generate a master installer.
+
+positional arguments:
+  tmxFiles              path to tmx file(s) to process
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -s, --scanfolders     scan all subfolders and generate master installer
+  -O INSTALLER, --installer INSTALLER
+                        output installer event (default: [Folder]/Master Map
+                        Installer.event)
+  -H, --noheader        do not add in the tmx2ea header in generated file(s)
+```
+
+*See `TMX2EA/README.md` for details.*
 
 ## `text-process`
 
