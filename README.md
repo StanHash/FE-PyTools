@@ -60,14 +60,14 @@ optional arguments:
 (python3) "text-process.py" <input text> <output installer> <output definitions>
 ```
 
-Note that, unlike for the original textprocess which generates `#incext`s, the output installer will `#incbin` a series of `xyz.fetxt.bin` files, but the program only generates `xyz.fetxt` files. It is your responsibility to ensure the `fetxt.bin` file is made from the `fetxt` file; such as by using a make rule involving a `ParseFile` invocation, perhaps. Ex:
+Note that, unlike for the original textprocess which generates `#incext`s, the output installer will `#incbin` a series of `xyz.fetxt.dmp` files, but the program only generates `xyz.fetxt` files. It is your responsibility to ensure the `fetxt.dmp` file is made from the `fetxt` file; such as by using a make rule involving a `ParseFile` invocation, perhaps. Ex:
 
 ```make
-%.fetxt.bin: %.fetxt
+%.fetxt.dmp: %.fetxt
 	ParseFile $< -o $@
 ```
 
-The idea is that you get the "list" of `fetxt.bin` files to generate through dependency analysis with Event Assembler. (I may add support for listing dependencies in text-process itself in the future).
+The idea is that you get the "list" of `fetxt.dmp` files to generate through dependency analysis with Event Assembler. (I may add support for listing dependencies in text-process itself in the future).
 
 ## `portrait-process`
 
