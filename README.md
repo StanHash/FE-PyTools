@@ -69,6 +69,16 @@ Note that, unlike for the original textprocess which generates `#incext`s, the o
 
 The idea is that you get the "list" of `fetxt.dmp` files to generate through dependency analysis with Event Assembler. (I may add support for listing dependencies in text-process itself in the future).
 
+## `text-process-classic`
+
+```sh
+(python3) "text-process-classic.py" <input text> [--installer <output installer>] [--definitions <output definitions>] [--parser-exe <path/to/ParseFile>] [--force-refresh]
+```
+
+Version of `text-process` that is more Classic!MakeHack-friendly.
+
+TODO: help
+
 ## `portrait-process`
 
 ```sh
@@ -102,9 +112,9 @@ The idea is that you get the "list" of portrait data files to generate through d
 
 Most tools were based off circleseverywhere's work.
 
-| name               | original authors           | further additions    | notes |
-| ------------------ | -------------------------- | -------------------- | ----- |
-| `c2ea` & `n2c`     | circleseverywhere, zahlman | Crazycolorz5, StanH_ | - |
-| `tmx2ea`           | circleseverywhere          | StanH_               | - |
-| `text-process`     | circleseverywhere          | StanH_               | relies on `ParseFile` by CrazyColorz5 |
-| `portrait-process` | StanH_                     | -                    | relies on `PortraitFormatter` by CrazyColorz5 |
+| name               | original authors           | further additions  | notes |
+| ------------------ | -------------------------- | ------------------ | ----- |
+| `c2ea` & `n2c`     | circleseverywhere, zahlman | Crazycolorz5, Stan | - |
+| `tmx2ea`           | circleseverywhere          | Stan               | - |
+| `text-process`     | circleseverywhere          | Stan               | relies on `ParseFile` by CrazyColorz5 |
+| `portrait-process` | Stan                       | -                  | relies on `PortraitFormatter` by CrazyColorz5 |
