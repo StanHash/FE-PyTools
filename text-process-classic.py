@@ -126,6 +126,7 @@ def generate_text_binary(parseFileExe, textEntry, sourceFile, targetFile):
 	result = sp.run([parseFileExe, sourceFile, "--to-stdout"], stdout = sp.PIPE)
 
 	if result.stdout[:6] == b"ERROR:":
+		os.remove(sourceFile)
 		raise ParseFileError(textEntry, result.stdout[6:].strip().decode("utf-8"))
 
 	with open(targetFile, 'wb') as f:
