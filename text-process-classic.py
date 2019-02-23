@@ -252,10 +252,12 @@ def main(args):
 				# As it would not have changed
 
 				textNeedsUpdate = True
-				textModifyTime = os.path.getmtime(textFileName)
+				textModifyTime = 0.0
 
 				if not forceRefresh:
 					if os.path.exists(textFileName):
+						textModifyTime = os.path.getmtime(textFileName)
+
 						with open(textFileName, 'r') as tf:
 							if str(tf.read()) == entry.text:
 								textNeedsUpdate = False
