@@ -1,3 +1,4 @@
+
 import sys, os
 
 def show_exception_and_exit(exc_type, exc_value, tb):
@@ -66,8 +67,17 @@ class MugEntry:
 		except StopIteration:
 			pass # those are optional
 
-	def gen_event_lines(self, eventPath):
-		realPath = os.path.join(os.path.dirname(eventPath), self.fPath)
+	def list_data_files(self, parentPath):
+		realPath = os.path.join(os.path.dirname(parentPath), self.fPath)
+		incBase = os.path.splitext(realPath)[0]
+
+		yield incBase + '_mug.dmp'
+		yield incBase + '_palette.dmp'
+		yield incBase + '_minimug.dmp'
+		yield incBase + '_frames.dmp'
+
+	def gen_event_lines(self, parentPath):
+		realPath = os.path.join(os.path.dirname(parentPath), self.fPath)
 
 		if not os.path.exists(realPath):
 			sys.exit("File `{0}` doesn't exist.".format(realPath))
@@ -99,26 +109,52 @@ def gen_header():
 if __name__ == '__main__':
 	sys.excepthook = show_exception_and_exit
 
-	if len(sys.argv) < 3:
-		sys.exit("Usage: {0} <input file> <output event file>".format(sys.argv[0]))
+	import argparse
 
-	inFile = sys.argv[1]
-	outFile = sys.argv[2]
+	argParser = argparse.ArgumentParser(description = "")
 
-	if not os.path.exists(inFile):
-		sys.exit("File `{0}` doesn't exist.".format(inFile))
+	argParser.add_argument("input", help = "input list file")
 
-	with open(inFile, 'r') as file:
-		with open(outFile, 'w') as output:
-			output.writelines(gen_header())
+	meg = argParser.add_mutually_exclusive_group()
+	meg.add_argument("--list-files", action = 'store_true', help = "print installer dependencies")
+	meg.add_argument("-o", "--output", help = "output installer filename")
 
-			for line in file.readlines():
-				line = line.strip()
+	arguments = argParser.parse_args()
 
-				if (len(line) == 0):
-					continue
+	if not os.path.exists(arguments.input):
+		sys.exit("File `{0}` doesn't exist.".format(arguments.input))
 
-				if line[0] == '#':
-					continue
-				
-				output.writelines(MugEntry(line).gen_event_lines(outFile))
+	mugs = []
+
+	with open(arguments.input, 'r') as f:
+		for line in f.readlines():
+			line = line.strip()
+
+			if (len(line) == 0):
+				continue
+
+			if line[0] == '#':
+				continue
+
+			mugs.append(MugEntry(line))
+
+	if arguments.list_files:
+		for mug in mugs:
+			for filename in mug.list_data_files(arguments.input):
+				print(filename)
+
+	elif arguments.output != None:
+		if os.path.dirname(arguments.input) != os.path.dirname(arguments.output):
+			sys.exit("Portrait process doesn't support input and output files being in different directories (yet)")
+
+		with open(arguments.output, 'w') as f:
+			f.writelines(gen_header())
+
+			for mug in mugs:
+				f.writelines(mug.gen_event_lines(arguments.output))
+
+	else:
+		sys.stdout.writelines(gen_header())
+
+		for mug in mugs:
+			sys.stdout.writelines(mug.gen_event_lines(arguments.input))

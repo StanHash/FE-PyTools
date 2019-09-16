@@ -56,6 +56,8 @@ optional arguments:
 
 ## `text-process`
 
+***Note***: This is deprecated. Consider using `text-process-classic` instead.
+
 ```sh
 (python3) "text-process.py" <input text> <output installer> <output definitions>
 ```
@@ -81,8 +83,16 @@ TODO: help
 
 ## `portrait-process`
 
-```sh
-(python3) "portrait-process.py" <input list file> <output installer>
+```
+usage: portrait-process.py [-h] [--list-files | -o OUTPUT] input
+
+positional arguments:
+  input                 input list file
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --list-files          print installer dependencies
+  -o OUTPUT             output installer filename
 ```
 
 The input list file follows this format:
@@ -106,7 +116,7 @@ As for text-process, portrait-process doesn't generate any actual portrait data.
 	PortraitFormatter $<
 ```
 
-The idea is that you get the "list" of portrait data files to generate through dependency analysis with Event Assembler. (I may add support for listing dependencies in portrait-process itself in the future).
+The "list" of portrait data files to generate can be get through usage of the `--list-files` option (note that it will not both list files and generate an installer at the same time).
 
 # Credits
 
