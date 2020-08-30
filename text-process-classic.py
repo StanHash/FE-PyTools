@@ -1,4 +1,8 @@
+
 import os, sys, re
+
+INPUT_ENCODING = "sjis"
+OUTPUT_ENCODING = "sjis"
 
 def show_exception_and_exit(exc_type, exc_value, tb):
 	import traceback
@@ -92,7 +96,7 @@ def preprocess(fileName, doTrace, includeDepth = 0):
 	if doTrace:
 		print("TRACE: [preprocess] opening `{}`".format(fileName))
 
-	with open(fileName, 'r') as f:
+	with open(fileName, 'r', encoding=INPUT_ENCODING) as f:
 		for iLine, line in enumerate(f.readlines()):
 			m = re.match(r"^#include\s+(.+)", line.strip(), re.M | re.I)
 
@@ -258,7 +262,7 @@ def main(args):
 					if os.path.exists(textFileName):
 						textModifyTime = os.path.getmtime(textFileName)
 
-						with open(textFileName, 'r') as tf:
+						with open(textFileName, 'r', encoding=OUTPUT_ENCODING) as tf:
 							if str(tf.read()) == entry.text:
 								textNeedsUpdate = False
 
@@ -271,7 +275,7 @@ def main(args):
 					if verbose:
 						print("TRACE: [write] output `{}`".format(textFileName))
 
-					with open(textFileName, 'w') as tf:
+					with open(textFileName, 'w', encoding=OUTPUT_ENCODING) as tf:
 						tf.write(entry.text)
 
 				# Write parsed data if we have a parser
