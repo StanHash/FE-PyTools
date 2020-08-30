@@ -3,4 +3,4 @@
 	url = https://github.com/FireEmblemUniverse/NMM2CSV
 [submodule "TMX2EA"]
 	path = TMX2EA
-	url = https://github.com/FireEmblemUniverse/tmx2ea
+	url = https://github.com/StanHash/tmx2ea
