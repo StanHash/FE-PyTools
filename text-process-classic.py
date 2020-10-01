@@ -12,8 +12,8 @@
 
 import os, sys, re
 
-INPUT_ENCODING = "sjis"
-OUTPUT_ENCODING = "sjis"
+INPUT_ENCODING = "utf-8"
+OUTPUT_ENCODING = "utf-8"
 
 def show_exception_and_exit(exc_type, exc_value, tb):
 	import traceback
