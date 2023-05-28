@@ -111,6 +111,8 @@ def generate_definitions_lines(name, textEntries):
 def main():
 	sys.excepthook = show_exception_and_exit
 
+	print(f"WARNING: This tool (text-process.py) is deprecated in favor of text-process-classic.py.")
+
 	if len(sys.argv) != 4:
 		sys.exit("Usage: (python3) {} <input> <install output> <definition output>".format(sys.argv[0]))
 

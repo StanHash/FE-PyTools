@@ -1,3 +1,5 @@
+# Any copyright is dedicated to the Public Domain.
+# https://creativecommons.org/publicdomain/zero/1.0/
 
 # TPC CHANGELOG:
 
@@ -9,6 +11,12 @@
 #   - Invoke using either `{<name>}` or `[<name>]`
 #   - Nesting invocations supported
 # - Add support for C++-style comments ('// <comment>' at the end of lines)
+
+# 2.1:
+# - Add support for new ParseFile -defs option
+# - Change macro generation to only account for leaf filename (not the entire path)
+
+# TODO: merge from/into existing forks (narrow font helpers)
 
 import os, sys, re
 
@@ -201,10 +209,18 @@ def generate_definitions_lines(name, textEntries):
 
 	yield "\n#endif // TEXT_DEFINITIONS_{}\n".format(name)
 
-def generate_text_binary(parseFileExe, textEntry, sourceFile, targetFile):
+def generate_text_binary(parseFileExe, parseDefinitions, textEntry, sourceFile, targetFile):
 	import subprocess as sp
 
-	result = sp.run([parseFileExe, sourceFile, "--to-stdout"], stdout = sp.PIPE)
+	args = [parseFileExe, sourceFile]
+
+	if parseDefinitions != None:
+		args.append("-defs") # Colorz, why is there only one dash?
+		args.append(parseDefinitions)
+
+	args.append("--to-stdout")
+
+	result = sp.run(args, stdout = sp.PIPE)
 
 	if result.stdout[:6] == b"ERROR:":
 		os.remove(sourceFile)
@@ -222,7 +238,8 @@ def main(args):
 	argParse.add_argument('--installer', default = 'Install Text Data.event', help = 'name of the installer event file to produce')
 	argParse.add_argument('--definitions', default = 'Text Definitions.event', help = 'name of the definitions event file to produce')
 	argParse.add_argument('--parser-exe', default = None, help = 'name/path of the parser executable')
-	argParse.add_argument('--depends', default = None, nargs='*', help = 'files that text depends on (typically ParseDefinitions.txt)')
+	argParse.add_argument('--depends', default = [], nargs='*', help = 'files that text depends on')
+	argParse.add_argument('--parse-definitions', default = None, help = "path to ParseFile defintions (implies --depends)")
 	argParse.add_argument('--force-refresh', action = 'store_true', help = 'pass to forcefully refresh generated files')
 	argParse.add_argument('--verbose', action = 'store_true', help = 'print processing details to stdout')
 
@@ -237,12 +254,15 @@ def main(args):
 
 	timeThreshold = 0.0
 
-	if not arguments.depends:
+	if arguments.parse_definitions == None:
 		# Hacky thing to automatically depend on ParseDefinitions.txt if the parser is ParseFile
 
 		if parserExePath and "ParseFile" in parserExePath:
 			if os.path.exists("ParseDefinitions.txt"):
-				arguments.depends = ["ParseDefinitions.txt"]
+				arguments.depends.append("ParseDefinitions.txt")
+
+	else:
+		arguments.depends.append(arguments.parse_definitions)
 
 	if arguments.depends:
 		timeThreshold = max([os.path.getmtime(filename) for filename in arguments.depends])
@@ -262,7 +282,7 @@ def main(args):
 
 	entryList = []
 
-	macroizedInputName = macroize_name(inputPath)
+	macroizedInputName = macroize_name(inputName)
 
 	hasParser = parserExePath and os.path.exists(parserExePath)
 
@@ -356,7 +376,7 @@ def main(args):
 						if verbose:
 							sys.stderr.write("TRACE: [write] update `{}`\n".format(dataFileName))
 
-						generate_text_binary(parserExePath, entry, textFileName, dataFileName)
+						generate_text_binary(parserExePath, arguments.parse_definitions, entry, textFileName, dataFileName)
 
 				# Write include
 
