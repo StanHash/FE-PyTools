@@ -74,12 +74,34 @@ The idea is that you get the "list" of `fetxt.dmp` files to generate through dep
 ## `text-process-classic`
 
 ```sh
-(python3) "text-process-classic.py" <input text> [--installer <output installer>] [--definitions <output definitions>] [--parser-exe <path/to/ParseFile>] [--force-refresh]
+(python3) "text-process-classic.py" <input text> [--installer <output installer>] [--definitions <output definitions>] [--parser-exe <path/to/ParseFile>] [--parse-definitions <ParseDefinitions.txt>] [--force-refresh]
 ```
 
 Version of `text-process` that is more Classic!MakeHack-friendly.
 
-TODO: help
+```
+usage: text-process-classic.py [-h] [--installer INSTALLER] [--definitions DEFINITIONS] [--parser-exe PARSER_EXE] [--depends [DEPENDS ...]]
+                               [--parse-definitions PARSE_DEFINITIONS] [--force-refresh] [--verbose]
+                               input
+
+positional arguments:
+  input                 input text file
+
+options:
+  -h, --help            show this help message and exit
+  --installer INSTALLER
+                        name of the installer event file to produce
+  --definitions DEFINITIONS
+                        name of the definitions event file to produce
+  --parser-exe PARSER_EXE
+                        name/path of the parser executable
+  --depends [DEPENDS ...]
+                        files that text depends on
+  --parse-definitions PARSE_DEFINITIONS
+                        path to ParseFile defintions (implies --depends)
+  --force-refresh       pass to forcefully refresh generated files
+  --verbose             print processing details to stdout
+```
 
 ## `portrait-process`
 
