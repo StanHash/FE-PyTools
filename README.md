@@ -98,7 +98,7 @@ The idea is that you get the "list" of `fetxt.dmp` files to generate through dep
 (python3) "text-process-classic.py" <input text> [--installer <output installer>] [--definitions <output definitions>] [--parser-exe <path/to/ParseFile>] [--parse-definitions <ParseDefinitions.txt>] [--force-refresh]
 ```
 
-Version of `text-process` that is more Classic!MakeHack-friendly.
+Version of `text-process` that is more Classic!MakeHack-friendly. As of 2023-05-29, this version features the narrow font helpers written by Bly.
 
 ```
 usage: text-process-classic.py [-h] [--installer INSTALLER] [--definitions DEFINITIONS] [--parser-exe PARSER_EXE] [--depends [DEPENDS ...]]
