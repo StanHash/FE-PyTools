@@ -54,6 +54,27 @@ optional arguments:
 
 *See `TMX2EA/README.md` for details.*
 
+## `tmx1ea`
+
+This is a wrapper around the core of TMX2EA. It can't batch process maps and folders but on the other hand it allows specifying output paths.
+
+```
+usage: tmx1ea.py [-h] [--output-event OUTPUT_EVENT] [--output-data OUTPUT_DATA] [--omit-header] tmx_file
+
+Convert a TMX file into an installable EA event. This only processes a single file and does not create an installer.
+
+positional arguments:
+  tmx_file              path to tmx file to process
+
+options:
+  -h, --help            show this help message and exit
+  --output-event OUTPUT_EVENT
+                        output event (default: TMX_FILE:.tmx=.event)
+  --output-data OUTPUT_DATA
+                        output dmp (default: TMX_FILE:.tmx=_data.dmp)
+  --omit-header         do not add in the tmx2ea header in generated event file
+```
+
 ## `text-process`
 
 ***Note***: This is deprecated. Consider using `text-process-classic` instead.

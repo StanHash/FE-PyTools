@@ -23,7 +23,7 @@ def main():
     parser.add_argument("tmx_file", help="path to tmx file to process")
     parser.add_argument("--output-event", help='output event (default: TMX_FILE:.tmx=.event)')
     parser.add_argument("--output-data", help='output dmp (default: TMX_FILE:.tmx=_data.dmp)')
-    parser.add_argument("--omit-header", action="store_true", help="do not add in the tmx2ea header in generated file(s)")
+    parser.add_argument("--omit-header", action="store_true", help="do not add in the tmx2ea header in generated event file")
 
     args = parser.parse_args()
 
